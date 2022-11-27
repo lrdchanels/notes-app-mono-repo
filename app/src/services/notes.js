@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3001/api/notes';
+const baseUrl = 'https://notes-api-drab.vercel.app/api/notes';
 
 export const getAll = async() => {
   const data = await fetch(baseUrl)
