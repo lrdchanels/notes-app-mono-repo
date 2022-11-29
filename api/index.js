@@ -8,7 +8,7 @@ import { Note } from './models/Note.js'
 import { notFound } from './middleware/notFound.js'
 import { handleErrors } from './middleware/handleErrors.js'
 
-const app = express()
+export const app = express()
 app.use(cors())
 app.use(express.json())
 app.use('/images', express.static('./images'))
