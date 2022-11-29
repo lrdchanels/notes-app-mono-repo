@@ -6,7 +6,7 @@ const uri = NODE_ENV === 'test'
   : MONGO_DB_URI
 
 mongoose.connect(uri)
-  .then(() => {
+  .then((done) => {
     console.log('Database connected')
   })
   .catch((e) => {
