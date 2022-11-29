@@ -1,0 +1,28 @@
+# React
+  # Create new react app
+  npx create-react-app "name"
+
+# Node
+  # Create new node project
+  npm init
+
+  # Live server
+  npm install nodemon -D
+
+  # express
+  npm install express
+
+  # eslint with standard
+  npm install standard -D
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
+
+  # cors to share resources between ports
+  npm install cors
+
+  # mongoose
+  npm install mongoose
+
+  # use env
+  npm install dotenv
