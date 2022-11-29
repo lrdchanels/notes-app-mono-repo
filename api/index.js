@@ -8,7 +8,7 @@ import { Note } from './models/Note.js'
 import { notFound } from './middleware/notFound.js'
 import { handleErrors } from './middleware/handleErrors.js'
 
-export const app = express()
+const app = express()
 app.use(cors())
 app.use(express.json())
 app.use('/images', express.static('./images'))
@@ -90,3 +90,5 @@ const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+export default app

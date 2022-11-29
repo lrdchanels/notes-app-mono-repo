@@ -26,3 +26,9 @@
 
   # use env
   npm install dotenv
+
+  # testing 
+  npm install jest -D
+
+  # testing endpoints
+  npm install supertest -D
