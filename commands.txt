@@ -32,3 +32,6 @@
 
   # testing endpoints
   npm install supertest -D
+
+  # encrypt passwords
+  npm install bcrypt
