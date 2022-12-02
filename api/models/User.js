@@ -1,7 +1,13 @@
+import mongooseUniqueValidator from 'mongoose-unique-validator'
 import { model, Schema } from 'mongoose'
 
+import { Note } from '../models/Note.js'
+
 const userSchema = new Schema({
-  username: String,
+  username: {
+    type: String,
+    unique: true
+  },
   name: String,
   passwordHash: String,
   notes: [{
@@ -19,6 +25,6 @@ userSchema.set('toJSON', {
   }
 })
 
-export const User = model('User', userSchema)
+userSchema.plugin(mongooseUniqueValidator)
 
-// User.updateMany({ prova: true })
+export const User = model('User', userSchema)

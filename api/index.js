@@ -6,8 +6,8 @@ import cors from 'cors'
 
 import { usersRouter } from './routes/users.route.js'
 import { notesRouter } from './routes/notes.route.js'
-import { notFound } from './middleware/notFound.js'
-import { handleErrors } from './middleware/handleErrors.js'
+import { notFound } from './middlewares/notFound.js'
+import { handleErrors } from './middlewares/handleErrors.js'
 
 const app = express()
 app.use(cors())

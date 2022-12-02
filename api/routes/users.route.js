@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { createUser } from '../controllers/users.controller.js'
+import { getUsers, createUser, deleteUser } from '../controllers/users.controller.js'
 
 const usersRouter = Router()
 
+usersRouter.get('/', getUsers)
 usersRouter.post('/', createUser)
-
+usersRouter.delete('/:id', deleteUser)
 export { usersRouter }

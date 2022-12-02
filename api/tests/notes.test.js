@@ -27,7 +27,8 @@ describe('POST', () => {
   it('a valid note can be added', async () => {
     const newNote = {
       content: 'newNote',
-      important: true
+      important: true,
+      userId: '63896f04d3f64d1c4176670b'
     }
 
     await api

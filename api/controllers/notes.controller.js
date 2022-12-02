@@ -1,8 +1,13 @@
 import { Note } from '../models/Note.js'
+import { User } from '../models/User.js'
 
 const getNotes = async (request, response, next) => {
   try {
-    const notes = await Note.find({})
+    const notes = await Note.find({}).populate('user', {
+      username: 1,
+      name: 1
+    })
+
     await response.json(notes)
   } catch (error) {
     next(error)
@@ -13,7 +18,11 @@ const getNote = async (request, response, next) => {
   const { id } = request.params
 
   try {
-    const note = await Note.findById(id)
+    const note = await Note.findById(id).populate('user', {
+      username: 1,
+      name: 1
+    })
+
     response.json(note)
   } catch (error) {
     next(error)
@@ -21,22 +30,33 @@ const getNote = async (request, response, next) => {
 }
 
 const createNote = async (request, response, next) => {
-  const note = request.body
+  const {
+    content,
+    important = false,
+    userId
+  } = request.body
 
-  if (!note || !note.content) {
+  if (!content) {
     return response.status(400).json({
-      error: 'note is missing'
+      error: 'required "content" field is missing'
     })
   }
 
+  const user = await User.findById(userId)
+
   const noteToInsert = new Note({
-    content: note.content,
+    content,
     date: new Date(),
-    important: note.important ?? false
+    important,
+    user: user._id
   })
 
   try {
     const savedNote = await noteToInsert.save()
+
+    user.notes = user.notes.concat(savedNote._id)
+    await user.save()
+
     response.status(201).json(savedNote)
   } catch (error) {
     next(error)

@@ -35,3 +35,6 @@
 
   # encrypt passwords
   npm install bcrypt
+
+  # validate field already exist in database
+  npm install mongoose-unique-validator

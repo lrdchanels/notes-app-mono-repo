@@ -7,7 +7,7 @@ import { initialUsers, getAllUsers, getUserByUsername } from './helpers/users.he
 
 describe('POST', () => {
   it('a valid user can be added', async () => {
-    const { response: firstResponse } = await getAllUsers()
+    const { response: usersAtStart } = await getAllUsers()
 
     const newUser = {
       username: 'ElCarlos',
@@ -21,13 +21,28 @@ describe('POST', () => {
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
-    const { response: secondResponse } = await getAllUsers()
+    const { response: usersAtEnd } = await getAllUsers()
     const { response: userDB } = await getUserByUsername(newUser.username)
 
-    console.log(userDB)
-
-    expect(firstResponse).toHaveLength(secondResponse.length - 1)
+    expect(usersAtStart).toHaveLength(usersAtEnd.length - 1)
     expect(newUser.username).toBe(userDB.username)
+  })
+
+  it('creation fails with proper statuscode and message if username is already taken', async () => {
+    const { response: usersAtStart } = await getAllUsers()
+
+    const newUser = await { password: initialUsers[0].passwordHash, ...initialUsers[0] }
+
+    const result = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(409)
+      .expect('Content-Type', /application\/json/)
+
+    const { response: usersAtEnd } = await getAllUsers()
+
+    expect(usersAtStart).toHaveLength(usersAtEnd.length)
+    expect(result.body.errors.username.message).toContain('`username` to be unique')
   })
 })
 
@@ -37,6 +52,7 @@ beforeEach(async () => {
   for (const user of initialUsers) {
     const notesObject = new User(user)
     await notesObject.save()
+    console.log(user)
   }
 })
 
